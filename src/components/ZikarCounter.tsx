@@ -38,7 +38,7 @@ export const ZikarCounter = ({ zikarName, zikarArabic, targetCount, onCountChang
     <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
       {/* Zikar Name Display */}
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold text-islamic-green">{zikarArabic}</h2>
+        <h2 className="text-4xl font-arabic font-bold text-islamic-green" dir="rtl">{zikarArabic}</h2>
         <p className="text-lg text-muted-foreground">{zikarName}</p>
       </div>
 

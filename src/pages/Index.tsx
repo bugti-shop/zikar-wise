@@ -1,17 +1,42 @@
 import { useState } from "react";
 import { ZikarCounter } from "@/components/ZikarCounter";
-import { ZikarSelector, ZIKAR_OPTIONS, type Zikar } from "@/components/ZikarSelector";
+import { ZikarSelector, type Zikar } from "@/components/ZikarSelector";
 import { TargetSelector } from "@/components/TargetSelector";
+import { AddCustomZikar } from "@/components/AddCustomZikar";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useCustomZikar } from "@/hooks/useCustomZikar";
+import { COMMON_ZIKAR } from "@/data/zikarPacks";
+import { toast } from "sonner";
 
 const Index = () => {
-  const [selectedZikar, setSelectedZikar] = useState<Zikar>(ZIKAR_OPTIONS[0]);
+  const { customZikars, addCustomZikar, removeCustomZikar } = useCustomZikar();
+  const [selectedZikar, setSelectedZikar] = useState<Zikar>(COMMON_ZIKAR[0]);
   const [targetCount, setTargetCount] = useState(selectedZikar.defaultTarget);
+  const [showAddCustom, setShowAddCustom] = useState(false);
 
   const handleZikarChange = (zikar: Zikar) => {
     setSelectedZikar(zikar);
     setTargetCount(zikar.defaultTarget);
+    setShowAddCustom(false);
+  };
+
+  const handleAddCustomZikar = (zikar: Zikar) => {
+    addCustomZikar(zikar);
+    setSelectedZikar(zikar);
+    setTargetCount(zikar.defaultTarget);
+    setShowAddCustom(false);
+  };
+
+  const handleDeleteCustomZikar = (id: string) => {
+    removeCustomZikar(id);
+    toast.success("Custom Zikr removed");
+    
+    // If the deleted zikar was selected, switch to first common zikar
+    if (selectedZikar.id === id) {
+      setSelectedZikar(COMMON_ZIKAR[0]);
+      setTargetCount(COMMON_ZIKAR[0].defaultTarget);
+    }
   };
 
   return (
@@ -32,15 +57,27 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 space-y-8">
-        {/* Zikar Selector */}
+        {/* Zikar Selector or Add Custom Form */}
         <section>
-          <ZikarSelector
-            selectedZikar={selectedZikar}
-            onSelectZikar={handleZikarChange}
-          />
+          {showAddCustom ? (
+            <AddCustomZikar
+              onAdd={handleAddCustomZikar}
+              onCancel={() => setShowAddCustom(false)}
+            />
+          ) : (
+            <ZikarSelector
+              selectedZikar={selectedZikar}
+              onSelectZikar={handleZikarChange}
+              customZikars={customZikars}
+              onDeleteCustomZikar={handleDeleteCustomZikar}
+              onAddCustomClick={() => setShowAddCustom(true)}
+            />
+          )}
         </section>
 
-        <Separator className="my-8" />
+        {!showAddCustom && (
+          <>
+            <Separator className="my-8" />
 
         {/* Target Selector */}
         <section>
@@ -61,16 +98,18 @@ const Index = () => {
           />
         </section>
 
-        {/* Info Card */}
-        <Card className="max-w-2xl mx-auto p-6 bg-muted/50 border-islamic-green/20">
-          <h3 className="font-semibold text-foreground mb-2">How to Use</h3>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• Select your preferred Zikar from the options above</li>
-            <li>• Set your target count (preset or custom)</li>
-            <li>• Tap the counter button to increment your count</li>
-            <li>• Complete your Zikar with focus and sincerity</li>
-          </ul>
-        </Card>
+            {/* Info Card */}
+            <Card className="max-w-2xl mx-auto p-6 bg-muted/50 border-islamic-green/20">
+              <h3 className="font-semibold text-foreground mb-2">How to Use</h3>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Choose from Common Zikr, Duas, Daroods, or create custom ones</li>
+                <li>• Set your target count (preset or custom)</li>
+                <li>• Tap the counter button to increment your count</li>
+                <li>• Your custom Zikr are saved locally on your device</li>
+              </ul>
+            </Card>
+          </>
+        )}
       </main>
 
       {/* Footer */}
