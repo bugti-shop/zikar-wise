@@ -57,6 +57,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        islamic: {
+          green: "hsl(var(--islamic-green))",
+          teal: "hsl(var(--islamic-teal))",
+          gold: "hsl(var(--islamic-gold))",
+          cream: "hsl(var(--islamic-cream))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +86,32 @@ export default {
             height: "0",
           },
         },
+        "count-pulse": {
+          "0%, 100%": {
+            transform: "scale(1)",
+            opacity: "1",
+          },
+          "50%": {
+            transform: "scale(1.05)",
+            opacity: "0.9",
+          },
+        },
+        "ripple": {
+          "0%": {
+            transform: "scale(0.8)",
+            opacity: "1",
+          },
+          "100%": {
+            transform: "scale(2.4)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "count-pulse": "count-pulse 0.3s ease-out",
+        "ripple": "ripple 0.6s ease-out",
       },
     },
   },
