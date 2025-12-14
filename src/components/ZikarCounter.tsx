@@ -42,6 +42,7 @@ export const ZikarCounter = ({ zikarName, zikarArabic, targetCount, onCountChang
 
   const handleReset = () => {
     setCount(0);
+    setHasCompleted(false); // Allow new history entry after reset
   };
 
   const progress = (count / targetCount) * 100;
