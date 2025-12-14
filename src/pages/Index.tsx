@@ -4,6 +4,7 @@ import { ZikarSelector, type Zikar } from "@/components/ZikarSelector";
 import { TargetSelector } from "@/components/TargetSelector";
 import { AddCustomZikar } from "@/components/AddCustomZikar";
 import { ZikarHistory } from "@/components/ZikarHistory";
+import { ZikarStatistics } from "@/components/ZikarStatistics";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useCustomZikar } from "@/hooks/useCustomZikar";
@@ -110,6 +111,13 @@ const Index = () => {
             targetCount={targetCount}
             onComplete={handleZikarComplete}
           />
+        </section>
+
+        <Separator className="my-8" />
+
+        {/* Statistics */}
+        <section>
+          <ZikarStatistics history={history} />
         </section>
 
         <Separator className="my-8" />
