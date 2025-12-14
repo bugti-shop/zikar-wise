@@ -3,17 +3,30 @@ import { ZikarCounter } from "@/components/ZikarCounter";
 import { ZikarSelector, type Zikar } from "@/components/ZikarSelector";
 import { TargetSelector } from "@/components/TargetSelector";
 import { AddCustomZikar } from "@/components/AddCustomZikar";
+import { ZikarHistory } from "@/components/ZikarHistory";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useCustomZikar } from "@/hooks/useCustomZikar";
+import { useZikarHistory } from "@/hooks/useZikarHistory";
 import { COMMON_ZIKAR } from "@/data/zikarPacks";
 import { toast } from "sonner";
 
 const Index = () => {
   const { customZikars, addCustomZikar, removeCustomZikar } = useCustomZikar();
+  const { history, addHistoryEntry, clearHistory } = useZikarHistory();
   const [selectedZikar, setSelectedZikar] = useState<Zikar>(COMMON_ZIKAR[0]);
   const [targetCount, setTargetCount] = useState(selectedZikar.defaultTarget);
   const [showAddCustom, setShowAddCustom] = useState(false);
+
+  const handleZikarComplete = (count: number) => {
+    addHistoryEntry({
+      zikarName: selectedZikar.name,
+      zikarArabic: selectedZikar.arabic,
+      count,
+      target: targetCount,
+    });
+    toast.success("Zikr recorded in history!");
+  };
 
   const handleZikarChange = (zikar: Zikar) => {
     setSelectedZikar(zikar);
@@ -95,7 +108,15 @@ const Index = () => {
             zikarName={selectedZikar.name}
             zikarArabic={selectedZikar.arabic}
             targetCount={targetCount}
+            onComplete={handleZikarComplete}
           />
+        </section>
+
+        <Separator className="my-8" />
+
+        {/* History */}
+        <section>
+          <ZikarHistory history={history} onClearHistory={clearHistory} />
         </section>
 
             {/* Info Card */}

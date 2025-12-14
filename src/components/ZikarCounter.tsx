@@ -9,15 +9,28 @@ interface ZikarCounterProps {
   zikarArabic: string;
   targetCount: number;
   onCountChange?: (count: number) => void;
+  onComplete?: (count: number) => void;
 }
 
-export const ZikarCounter = ({ zikarName, zikarArabic, targetCount, onCountChange }: ZikarCounterProps) => {
+export const ZikarCounter = ({ zikarName, zikarArabic, targetCount, onCountChange, onComplete }: ZikarCounterProps) => {
   const [count, setCount] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [hasCompleted, setHasCompleted] = useState(false);
+
+  // Reset completion flag when zikar or target changes
+  useEffect(() => {
+    setHasCompleted(false);
+  }, [zikarName, targetCount]);
 
   useEffect(() => {
     onCountChange?.(count);
-  }, [count, onCountChange]);
+    
+    // Trigger onComplete when target is reached
+    if (count >= targetCount && !hasCompleted && count > 0) {
+      setHasCompleted(true);
+      onComplete?.(count);
+    }
+  }, [count, targetCount, onCountChange, onComplete, hasCompleted]);
 
   const handleIncrement = () => {
     if (count < targetCount) {
