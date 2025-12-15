@@ -11,6 +11,7 @@ import { useCustomZikar } from "@/hooks/useCustomZikar";
 import { useZikarHistory } from "@/hooks/useZikarHistory";
 import { COMMON_ZIKAR } from "@/data/zikarPacks";
 import { toast } from "sonner";
+import qalbifyLogo from "@/assets/qalbify-logo.jpg";
 
 const Index = () => {
   const { customZikars, addCustomZikar, removeCustomZikar } = useCustomZikar();
@@ -57,14 +58,21 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-islamic-green to-islamic-teal bg-clip-text text-transparent">
-              Zikar Counter
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Remember Allah with every count
-            </p>
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex items-center gap-3">
+            <img 
+              src={qalbifyLogo} 
+              alt="Qalbify Logo" 
+              className="w-10 h-10 rounded-lg object-cover"
+            />
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-islamic-green to-islamic-teal bg-clip-text text-transparent">
+                Qalbify
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                Remember Allah with every count
+              </p>
+            </div>
           </div>
         </div>
       </header>
