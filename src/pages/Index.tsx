@@ -65,14 +65,9 @@ const Index = () => {
               alt="Qalbify Logo" 
               className="w-10 h-10 rounded-lg object-cover"
             />
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-islamic-green to-islamic-teal bg-clip-text text-transparent">
-                Qalbify
-              </h1>
-              <p className="text-xs text-muted-foreground">
-                Remember Allah with every count
-              </p>
-            </div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-islamic-green to-islamic-teal bg-clip-text text-transparent">
+              Qalbify
+            </h1>
           </div>
         </div>
       </header>
